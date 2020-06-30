@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: one
+  number: 1
+  date: 2020-06-30
+  sub_total: 1.5
+  vat: false
+  retention_vat: 1.5
+  total: 1.5
+  payment_method: MyString
+  payment_due: 1
+
+two:
+  customer: two
+  number: 1
+  date: 2020-06-30
+  sub_total: 1.5
+  vat: false
+  retention_vat: 1.5
+  total: 1.5
+  payment_method: MyString
+  payment_due: 1
