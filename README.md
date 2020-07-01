@@ -1,24 +1,12 @@
-# README
+# Facturas
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project was created for learning purposes.
 
-Things you may want to cover:
+## Technologies
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Ruby on Rails v 6.0.3.2
+- React (ES6)
+- PostgreSQL
+- Bootstrap 4
+- fast jsonapi
+- axios
