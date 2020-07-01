@@ -12,45 +12,41 @@ const Customer = props => {
   };
 
   useEffect(() => {
-    axios.get(`/api/v1/customers/${customerId}`).then(result =>
+    axios.get(`/api/v1/customers/${customerId}`).then(result => {
+      const { attributes } = result.data.data;
+      const { invoices } = attributes;
       setCustomer(
         <div className="customer">
-          <p>{result.data.data.attributes.name}</p>
-          <p>{result.data.data.attributes.address}</p>
-          <p>{result.data.data.attributes.city}</p>
-          <p>{result.data.data.attributes.state}</p>
-          <p>{result.data.data.attributes.dni_cif}</p>
-          <p>{result.data.data.attributes.telephone}</p>
+          <p>{attributes.name}</p>
+          <p>{attributes.address}</p>
+          <p>{attributes.city}</p>
+          <p>{attributes.state}</p>
+          <p>{attributes.dni_cif}</p>
+          <p>{attributes.telephone}</p>
         </div>
-      )
-    );
-
-    axios.get(`/api/v1/customers/${customerId}/invoices`).then(result => {
+      );
       setInvoices(
-        result.data.data.map(invoice => (
+        invoices.map(invoice => (
           <tr key={invoice.id}>
             <td>
-              <Link to={`/invoice/${invoice.id}`}>
-                {invoice.attributes.number}
-              </Link>
+              <Link to={`/invoice/${invoice.id}`}>{invoice.number}</Link>
             </td>
-            <td>{invoice.attributes.date}</td>
-            <td>{invoice.attributes.payment_due}</td>
-            <td>{invoice.attributes.payment_method}</td>
-            <td>{invoice.attributes.vat}</td>
-            <td>{invoice.attributes.sub_total}</td>
-            <td>{invoice.attributes.total}</td>
+            <td>{invoice.date}</td>
+            <td>{invoice.payment_due}</td>
+            <td>{invoice.payment_method}</td>
+            <td>{invoice.vat}</td>
+            <td>{invoice.sub_total}</td>
+            <td>{invoice.total}</td>
           </tr>
         ))
       );
-      console.log(result.data.data);
     });
   }, [customer.length]);
 
   return (
-    <div>
+    <div className="container">
       {customer}
-      <table>
+      <table className="table table-hover table-bordered">
         <thead>
           <tr>
             <th scope="col">Number</th>

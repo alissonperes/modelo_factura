@@ -3,19 +3,25 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div>
-      <ul>
-        <li>
-          <Link to="/">Dashboard</Link>
+    <nav className="navbar sticky-top mb-5 navbar-expand navbar-dark bg-dark">
+      <ul className="navbar-nav mr-auto">
+        <li className="nav-item active">
+          <Link to="/" className="nav-link">
+            Dashboard
+          </Link>
         </li>
-        <li>
-          <Link to="/customers">Customers</Link>
+        <li className="nav-item active">
+          <Link to="/customers" className="nav-link">
+            Customers
+          </Link>
         </li>
-        <li>
-          <Link to="/invoices">Invoices</Link>
+        <li className="nav-item active">
+          <Link to="/invoices" className="nav-link">
+            Invoices
+          </Link>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 };
 

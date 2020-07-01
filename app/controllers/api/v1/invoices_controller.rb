@@ -3,7 +3,7 @@ module Api
     class InvoicesController < ApplicationController
       protect_from_forgery with: :null_session
       def index
-        invoices = params[:customer_id].nil? ? Invoice.all : Customer.find(params[:customer_id]).invoices
+        invoices = Invoice.all.order("due_date")
 
         render json: InvoiceSerializer.new(invoices).serialized_json
       end
@@ -11,14 +11,14 @@ module Api
       def show
         invoice = Invoice.find(params[:id])
 
-        render json: InvoiceSerializer.new(invoice, options).serialized_json
+        render json: InvoiceSerializer.new(invoice).serialized_json
       end
 
       def create
         invoice = Invoice.new(invoice_params)
 
         if invoice.save
-          render json: InvoiceSerializer.new(invoice).serialized_json
+          render json: InvoiceSerializer.new(invoice, options).serialized_json
         else
           render json: {error: invoice.errors.messages}, status: 422
         end

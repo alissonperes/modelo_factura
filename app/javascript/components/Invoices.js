@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Invoices = () => {
-  const [invoices, setCustomers] = useState([]);
+  const [invoices, setInvoices] = useState([]);
 
   useEffect(() => {
     axios
       .get("/api/v1/invoices")
-      .then(result => setCustomers(result.data.data))
+      .then(result => setInvoices(result.data.data))
       .catch(result => console.log(result));
   }, [invoices.length]);
   const grid = invoices.map(invoice => (
     <tr key={invoice.id}>
-      <td>{invoice.attributes.number}</td>
+      <td>
+        <Link to={`/invoice/${invoice.id}`}>{invoice.attributes.number}</Link>
+      </td>
       <td>{invoice.attributes.date}</td>
-      <td>{invoice.attributes.payment_due}</td>
+      <td>{`${invoice.attributes.payment_due} => ${invoice.attributes.due_date}`}</td>
       <td>{invoice.attributes.payment_method}</td>
       <td>{invoice.attributes.vat}</td>
       <td>{invoice.attributes.sub_total}</td>
@@ -23,8 +26,18 @@ const Invoices = () => {
   ));
 
   return (
-    <div>
-      <table>
+    <div className="container-fluid">
+      <form>
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Number" />
+          </div>
+          <div class="col">
+            <input type="date" class="form-control" />
+          </div>
+        </div>
+      </form>
+      <table className="table table-hover table-bordered">
         <thead>
           <tr>
             <th scope="col">Number</th>

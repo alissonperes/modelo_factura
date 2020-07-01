@@ -15,20 +15,35 @@ const Customers = props => {
   }, [customers.length]);
 
   const grid = customers.map(customer => (
-    <div key={customer.id}>
-      <Link to={`/customer/${customer.id}`}>
-        <p>{customer.attributes.name}</p>
-      </Link>
-      <p>{customer.attributes.address}</p>
-      <p>{customer.attributes.city}</p>
-      <p>{customer.attributes.state}</p>
-      <p>{customer.attributes.dni_cif}</p>
-      <p>{customer.attributes.telephone}</p>
-      <hr />
-    </div>
+    <tr key={customer.id}>
+      <td>
+        <Link to={`/customer/${customer.id}`}>{customer.attributes.name}</Link>
+      </td>
+      <td>{customer.attributes.address}</td>
+      <td>{customer.attributes.city}</td>
+      <td>{customer.attributes.state}</td>
+      <td>{customer.attributes.dni_cif}</td>
+      <td>{customer.attributes.telephone}</td>
+    </tr>
   ));
 
-  return <div>{grid}</div>;
+  return (
+    <div className="container-fluid">
+      <table className="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">DNI/CIF</th>
+            <th scope="col">Telephone</th>
+          </tr>
+        </thead>
+        <tbody>{grid}</tbody>
+      </table>
+    </div>
+  );
 };
 
 export default Customers;

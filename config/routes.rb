@@ -6,9 +6,7 @@ Rails.application.routes.draw do
       resources :invoices do
         resources :items
       end
-      resources :customers do
-        resources :invoices
-      end
+      resources :customers
     end
   end
   get '*path', to: 'pages#index', via: :all
