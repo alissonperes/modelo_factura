@@ -10,7 +10,7 @@ module Api
 
       def show
         customer = Customer.find(params[:id])
-
+        
         render json: CustomerSerializer.new(customer).serialized_json
       end
 
@@ -45,9 +45,9 @@ module Api
       end
 
       private
-      def customer_params
-        params.require(:customer).permit(:title, :author, :slug, :year)
-      end
+        def customer_params
+          params.require(:customer).permit(:title, :author, :slug, :year)
+        end
     end
   end
 end

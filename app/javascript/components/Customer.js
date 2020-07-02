@@ -6,6 +6,7 @@ const Customer = props => {
   const customerId = props.match.params.id;
   const [customer, setCustomer] = useState([]);
   const [invoices, setInvoices] = useState([]);
+
   let customerContainer;
   const setCustomerContainer = c => {
     customerContainer = <div>{c.name}</div>;
@@ -15,6 +16,7 @@ const Customer = props => {
     axios.get(`/api/v1/customers/${customerId}`).then(result => {
       const { attributes } = result.data.data;
       const { invoices } = attributes;
+
       setCustomer(
         <div className="customer">
           <p>{attributes.name}</p>
@@ -25,20 +27,23 @@ const Customer = props => {
           <p>{attributes.telephone}</p>
         </div>
       );
+
       setInvoices(
-        invoices.map(invoice => (
-          <tr key={invoice.id}>
-            <td>
-              <Link to={`/invoice/${invoice.id}`}>{invoice.number}</Link>
-            </td>
-            <td>{invoice.date}</td>
-            <td>{invoice.payment_due}</td>
-            <td>{invoice.payment_method}</td>
-            <td>{invoice.vat}</td>
-            <td>{invoice.sub_total}</td>
-            <td>{invoice.total}</td>
-          </tr>
-        ))
+        invoices
+          .filter(x => x.payment_confirmed !== true)
+          .map(invoice => (
+            <tr key={invoice.id}>
+              <td>
+                <Link to={`/invoice/${invoice.id}`}>{invoice.number}</Link>
+              </td>
+              <td>{invoice.date}</td>
+              <td>{invoice.due_date}</td>
+              <td>{invoice.payment_method}</td>
+              <td>{invoice.sub_total}</td>
+              <td>{invoice.vat ? "21%" : "Sujeto Passivo"}</td>
+              <td>{invoice.total}</td>
+            </tr>
+          ))
       );
     });
   }, [customer.length]);
@@ -53,8 +58,8 @@ const Customer = props => {
             <th scope="col">Date</th>
             <th scope="col">Payment due</th>
             <th scope="col">Payment Method</th>
-            <th scope="col">VAT</th>
             <th scope="col">Sub total</th>
+            <th scope="col">VAT</th>
             <th scope="col">Total</th>
           </tr>
         </thead>
