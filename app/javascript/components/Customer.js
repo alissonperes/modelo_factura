@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import formatter from "../assets/currencyFormat";
 
 const Customer = props => {
   const customerId = props.match.params.id;
   const [customer, setCustomer] = useState([]);
   const [invoices, setInvoices] = useState([]);
-
-  let customerContainer;
-  const setCustomerContainer = c => {
-    customerContainer = <div>{c.name}</div>;
-  };
 
   useEffect(() => {
     axios.get(`/api/v1/customers/${customerId}`).then(result => {
@@ -31,19 +27,24 @@ const Customer = props => {
       setInvoices(
         invoices
           .filter(x => x.payment_confirmed !== true)
-          .map(invoice => (
-            <tr key={invoice.id}>
-              <td>
-                <Link to={`/invoice/${invoice.id}`}>{invoice.number}</Link>
-              </td>
-              <td>{invoice.date}</td>
-              <td>{invoice.due_date}</td>
-              <td>{invoice.payment_method}</td>
-              <td>{invoice.sub_total}</td>
-              <td>{invoice.vat ? "21%" : "Sujeto Passivo"}</td>
-              <td>{invoice.total}</td>
-            </tr>
-          ))
+          .map(invoice => {
+            const dateClass =
+              new Date() > new Date(invoice.due_date) ? "bg-warning" : "";
+
+            return (
+              <tr key={invoice.id} className={dateClass}>
+                <td>
+                  <Link to={`/invoice/${invoice.id}`}>{invoice.number}</Link>
+                </td>
+                <td>{invoice.date}</td>
+                <td>{invoice.due_date}</td>
+                <td>{invoice.payment_method}</td>
+                <td>{formatter.format(invoice.sub_total)}</td>
+                <td>{invoice.vat ? "21%" : "Sujeto Passivo"}</td>
+                <td>{formatter.format(invoice.total)}</td>
+              </tr>
+            );
+          })
       );
     });
   }, [customer.length]);
