@@ -46,7 +46,7 @@ module Api
 
       private
       def invoice_params
-        params.require(:invoice).permit(:title, :author, :slug, :year)
+        params.require(:invoice).permit(:number, :date, :payment_due, :customer_id, :date)
       end
 
       def options
